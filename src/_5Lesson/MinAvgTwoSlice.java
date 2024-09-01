@@ -2,72 +2,52 @@ package _5Lesson;
 
 public class MinAvgTwoSlice {
     public static void main(String[] args) {
-        int[] A = {5, 6, 3, 4, 9};
-        //int i =3;
-        //int j =5;
-        //System.out.println(A.length);
+        int[] A = {4,2,2,5,1,5,8};
+        System.out.println(solution(A));
 
-        //System.out.println(average(A,i,j));
-        //System.out.println(averageMinI(A,i));
-        System.out.println(averageMinIJ(A));
-
-        System.out.println(" ");
-
-        System.out.println(averageMinI(A, 0));
-        System.out.println(averageMinI(A, 1));
-        System.out.println(averageMinI(A, 2));
-        System.out.println(averageMinI(A, 3));
-        //System.out.println(averageMinI(A, 4));
-        //System.out.println(averageMinI(A, 5));
+        // A time complexity o(n^2)
+        // Some problems with large and extreme large cases
+        // Total score 60 % (100% correctness, 20% performance)
+        // Needs to be improved
 
     }
 
+    public static int solution(int[] A) {
+        int[] partialSums = partialSums(A);
+        int minStart = 0;
+        double minAvg = (double) partialSums[partialSums.length - 1] / A.length;
 
-    public static int averageMinIJ(int[] A) {
-        double minAvIj = averageMinI(A, A.length - 2);
-        int index = A.length - 2;
-
-        for (int i = 0; i <=A.length - 2; i++) {
-            if (averageMinI(A, i) < minAvIj) {
-                minAvIj = averageMinI(A, i);
-                index=i;
+        double tmpAvg;
+        for (int i = 0; i < A.length - 1; i++) {
+            for (int j = i + 1; j < A.length; j++) {
+                tmpAvg = average(partialSums, i, j);
+                if (tmpAvg < minAvg) {
+                    minAvg = tmpAvg;
+                    minStart = i;
+                }
             }
         }
-        //return index;
-
-        return index;
-
+        return minStart;
     }
 
 
+    public static double average(int[] partialSums, int i, int j) {
+        int sum = partialSums[j] - (i > 0 ? partialSums[i - 1] : 0);
+        return (double) sum / (j - i + 1);
+    }
 
-    public static double averageMinI(int[] A, int i) {
-        if (i < A.length - 1) {
-            double minAvI = average(A, i, i + 1);
-            for (int j = i + 2; j < A.length; j++) {
-                minAvI = Math.min(average(A, i, j), minAvI);
-            }
-            return minAvI;
-        } else {
-            return 0;
+
+    public static int[] partialSums(int[] A) {
+        int[] partSum = new int[A.length];
+
+        partSum[0] = A[0];
+
+        for (int i = 1; i < A.length; i++) {
+            partSum[i] = A[i] + partSum[i - 1];
         }
+        return partSum;
     }
 
 
-    public static double average(int[] A, int i, int j) {
-        int sum = 0;
-        double average = 0;
-        if (i != j && i >= 0 && j >= 0 && i < A.length && j < A.length) {
-
-            for (int k = i; k <= j; k++) {
-                sum = sum + A[k];
-            }
-            average = (double) sum / (j - i + 1);
-
-            return average;
-        } else {
-            return 0;
-        }
-    }
 }
 

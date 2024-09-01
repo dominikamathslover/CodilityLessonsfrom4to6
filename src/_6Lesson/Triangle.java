@@ -4,26 +4,14 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 public class Triangle {
-    // usunąć z tablicy ujemne elementy i zera
-    // spr czy tablica ma co najmniej 3 elementy
-    // wybieramy trójki z tych co są jezeli pasuje to konczymy
-
-    // posortować
-    // sprawdzic co z trzema ostatnimi i przesunąć się po dodatnich
-
-    // coś jest nie tak w odpowiedzi czy sumy są ok !!!!!
 
 
     public static void main(String[] args) {
-        int[] A = {Integer.MAX_VALUE,Integer.MAX_VALUE,Integer.MAX_VALUE};
+
+        //int[] A = {Integer.MAX_VALUE,Integer.MAX_VALUE,Integer.MAX_VALUE};
+        int[] A={1,3,4,5,5};
+
         System.out.println(isTriangle(A));
-
-        //Sprawdzenie czy tablica jest dobrze posortowana
-        ArrayList<Integer> sortedNumbers = onlyPositiveSetA(A);
-        for (int i = 0; i < sortedNumbers.size(); i++) {
-            System.out.println(sortedNumbers.get(i));
-        }
-
 
     }
 

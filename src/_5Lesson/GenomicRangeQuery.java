@@ -1,108 +1,47 @@
 package _5Lesson;
 
-import java.util.HashSet;
-import java.util.List;
-
 public class GenomicRangeQuery {
     public static void main(String[] args) {
-        String[] S = {"C", "A", "G", "C", "C", "T", "A"};
-        int[] P = {2, 5, 0};
-        int[] Q = {4, 4, 5};
-        int[] table = genomicSeq(S, P, Q);
+
+        String S = "CAGCCTA";
+        int[] P = {2,5,0};
+        int[] Q = {4,5,6};
+        int[] table = solveGenomicRange(S, P, Q);
 
         for (int i = 0; i < table.length; i++) {
             System.out.print(table[i] + ", ");
         }
-
-
-        int[] genom = new int[P.length];
-
-        for (int i = 0; i < P.length; i++) {
-            for (int k = P[i]; k < Q[i]; k++) {
-                switch (S[k]) {
-                    case "A":
-                        genom[k]=1;
-                        k=Q[i];
-                        break;
-                    case "C":
-                        genom[k]= 2;
-                        break;
-                    case "G":
-                        genom[k]=3;
-                        break;
-                    case "T":
-                        genom[k]=4;
-                        // code block
-                }
-            }
-        }
-
-        for (int i = 0; i < genom.length-1; i++) {
-            System.out.print(genom[i] + ", ");
-        }
-
     }
 
-    public static int[] genomicSeq(String[] S, int[] P, int[] Q) {
-        HashSet<String> impactFactorsS = new HashSet<String>(List.of(S));
-        String[] basic = {"A", "C", "T", "G"};
-        HashSet<String> impactFactorsBasic = new HashSet<String>(List.of(basic));
-        HashSet<String> difference = new HashSet<String>();
 
-        int[] genom = new int[P.length];
+    public static int[] solveGenomicRange(String S, int[] P, int[] Q) {
+        int[][] genoms = new int[3][S.length() + 1];
 
-        int M = P.length;
-        int N = S.length;
+        char currentChar;
 
-        if (P.length != Q.length) {
-            return genom;
+        for (int i = 0; i < S.length(); i++) {
+            currentChar = S.charAt(i);
+            genoms[0][i + 1] = genoms[0][i] + (currentChar == 'A' ? 1 : 0);
+            genoms[1][i + 1] = genoms[1][i] + (currentChar == 'C' ? 1 : 0);
+            genoms[2][i + 1] = genoms[2][i] + (currentChar == 'G' ? 1 : 0);
         }
 
-        if (S.length < 1 || S.length > 100000) {
-            return genom;
-        }
-
-        if (M < 1 || M > 50000) {
-            return genom;
-        }
-
-        if (impactFactorsS.size() > 4) {
-            return genom;
-        }
-
-        for (String i : impactFactorsS) {
-            if (!impactFactorsBasic.contains(i)) {
-                return genom;
-            }
-        }
-
-        for (int i = 0; i <= P.length; i++) {
-            if (P[i] > Q[i] || P[i] >= N || P[i] < 0 || Q[i] >= N || Q[i] < 0) {
-                return genom;
-            }
-        }
+        int[] result = new int[P.length];
 
         for (int i = 0; i < P.length; i++) {
-            for (int k = P[i]; k < Q[i]; k++) {
-                switch (S[k]) {
-                    case "A":
-                        genom[k]=1;
-                        k=Q[i];
-                        break;
-                    case "C":
-                        genom[k]= 2;
-                        break;
-                    case "G":
-                        genom[k]=3;
-                        break;
-                    case "T":
-                        genom[k]=4;
-                        // code block
-                }
+            int fromIndex = P[i];
+            int toIndex = Q[i] + 1;
+            if (genoms[0][toIndex] - genoms[0][fromIndex] > 0) {
+                result[i] = 1;
+            } else if (genoms[1][toIndex] - genoms[1][fromIndex] > 0) {
+                result[i] = 2;
+            } else if (genoms[2][toIndex] - genoms[2][fromIndex] > 0) {
+                result[i] = 3;
+            } else {
+                result[i] = 4;
             }
         }
 
-        //A, C, G and T have impact factors of 1, 2, 3 and 4,
-        return genom;
+        return result;
     }
 }

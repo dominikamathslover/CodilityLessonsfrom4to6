@@ -8,6 +8,7 @@ public class MaxCountersNew {
         int[] A = {4, 4, 6, 1, 4, 4};
         int N = 5;
 
+        // More effective than the previous one
         System.out.println(Arrays.toString(counters(A, N)));
 
     }

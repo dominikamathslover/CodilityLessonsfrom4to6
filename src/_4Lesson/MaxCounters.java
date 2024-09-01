@@ -7,6 +7,7 @@ public class MaxCounters {
         int[] A = {4, 4, 6, 1, 4, 4};
         int N = 4;
 
+        // Less effective, problem with large tables -> compare with MaxCountersNew
         System.out.println(Arrays.toString(counters(A, N)));
 
     }

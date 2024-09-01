@@ -17,12 +17,9 @@ public class GenomicTry {
         int[] P = {2, 5, 0};
         int[] Q = {4, 5, 6};
 
-
-        System.out.println(genomicSet(S));
-        System.out.println(isAGenom(genomicSet(S)));
-        System.out.println(genomicMinInASequence(genomicSet(S)));
-        System.out.println(genomAssumptions(S, P,Q));
-
+        // time complexity o(n*m)
+        // timeout error with large and extreme large cases
+        // compare with GenomicRangeQuery
 
         System.out.println(Arrays.toString(solution(S, P, Q)));
 
@@ -105,13 +102,5 @@ public class GenomicTry {
         return true;
 
     }
-
-/*
-    done N is an integer within the range [1..100,000];
-    done M is an integer within the range [1..50,000];
-    done each element of arrays P and Q is an integer within the range [0..N - 1];
-    done P[K] ≤ Q[K], where 0 ≤ K < M;
-    string S consists only of upper-case English letters A, C, G, T.
- */
 
 }

@@ -10,7 +10,13 @@ public class NumberOfIntersectionsDiscs {
         //int[] A={1};
         //int[] A = {1, 5, 2, 1, 4, 0};
 
+        // complexity o(n^2) - problems with medium and large cases
+        // Needs to be improved  - correctness 87%
+
+
         System.out.println(solution(A));
+
+
 
     }
 
